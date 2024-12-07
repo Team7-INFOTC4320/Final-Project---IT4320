@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Administrator Login</title>
+    <style>
+       
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: lightgrey;
+            color: black;
+        }
+
+       
+        .navbar {
+            background-color: lightgrey;
+            padding: 20px;
+            display: flex;
+            justify-content: flex-start;
+            align-items: center;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border-bottom: 3px solid black;
+        }
+
+        .navbar a {
+            text-decoration: none;
+            color: red;
+            font-weight: bold;
+            margin: 0 10px;
+            font-size: 30px;
+        }
+
+        .navbar a:hover {
+            text-decoration: underline;
+        }
+
+      
+        .center-box {
+            background-color: white;
+            width: 700px;
+            margin: 50px auto;
+            padding: 20px;
+            border-radius: 0px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            text-align: center;
+        }
+
+        input[type="text"], input[type="text"] {
+            width: 95%;
+            padding: 10px;
+            font-size: 16px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        button {
+            margin-top: 20px;
+            padding: 10px 20px;
+            font-size: 16px;
+            color: white;
+            background-color: red;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: darkred;
+        }
+    </style>
+</head>
+<body>
+  
+    <div class="navbar">
+        <a href="/">Home</a>
+        <a href="/admin">Admin</a>
+        <a href="/reservations">Reservations</a>
+    </div>
+
+   
+    <div class="center-box">
+
+        {% if error %}
+        <p style="color: red; font-weight: bold;">{{ error }}</p>
+        {% endif %}
+        
+        {% if seating_chart is none %}
+
+        <h2>Administrator Login</h2>
+        <form action="/admin" method="POST">
+            <input type="text" name="username" placeholder="Username" required>
+            <input type="text" name="password" placeholder="Password" required>
+            <button type="submit">Log In</button>
+        </form>
+
+        {% else %}
+            <h3>Seating Chart:</h3>
+            <pre>{{ seating_chart }}</pre>
+            <h3>Total Sales: ${{ total_sales }}</h3>
+        {% endif %}
+
+    </div>
+</body>
+</html>
