@@ -92,15 +92,19 @@
             </select>
             <button type="submit">Go</button>
         </form>
+        <p id="error-message" style="color: red; display: none;">Please select either 'Reservations' or 'Admin' to continue.</p>
     </div>
-
+    
     <script>
-
         function handleSelection(event) {
             event.preventDefault();
             const selectedPage = document.getElementById('page-select').value;
+            const errorMessage = document.getElementById('error-message');
+            
             if (selectedPage) {
                 window.location.href = selectedPage;
+            } else {
+                errorMessage.style.display = 'block'; // Show the error message
             }
         }
     </script>

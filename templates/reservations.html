@@ -99,7 +99,8 @@
         <a href="/admin">Admin</a>
         <a href="/reservations">Reservations</a>
     </div>
-    <body>
+
+    <div class="errorbar">
         {% with messages = get_flashed_messages(with_categories=true) %}
         {% if messages %}
             <ul>
@@ -108,7 +109,7 @@
                 {% endfor %}
             </ul>
         {% endif %}
-    {% endwith %}
+        {% endwith %}
         <style>
             .success {
             color: green;
@@ -126,7 +127,8 @@
             border-radius: 5px;
         }
         </style>
-    </body>
+    </div>
+
     <div class="center-box">
         <h2>Reserve Your Seat</h2>
         <hr>

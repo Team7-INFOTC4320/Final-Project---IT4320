@@ -1,5 +1,6 @@
 from flask import Flask, render_template, request, redirect, url_for, flash
 import sqlite3
+import re
 
 app = Flask(__name__)
 app.secret_key = "your_secret_key"
@@ -102,6 +103,12 @@ def reservations():
         last_name = request.form.get("last_name")
         seat_row = int(request.form.get("seat_row")) - 1 #counting down choice to prevent index out of range error
         seat_column = int(request.form.get("seat_column")) - 1 #counting down choice to prevent index out of range error
+        
+        # Validate first and last name (only allow letters and spaces)
+        name_regex = re.compile("^[A-Za-z ]+$")
+        if not name_regex.match(first_name) or not name_regex.match(last_name):
+            flash("Names can only contain letters and spaces. Please correct the input.", "error")
+            return redirect(url_for("reservations"))
         
         # Check if the seat is already reserved
         reserved_seat = query_db(
