@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home</title>
+    <style>
+        
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: lightgrey;
+            color: black;
+        }
+
+       
+        .navbar {
+            background-color: lightgrey;
+            padding: 20px;
+            display: flex;
+            justify-content: flex-start;
+            align-items: center;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border-bottom: 3px solid black;
+        }
+
+        .navbar a {
+            text-decoration: none;
+            color: red;
+            font-weight: bold;
+            margin: 0 10px;
+            font-size: 30px;
+        }
+
+        .navbar a:hover {
+            text-decoration: underline;
+        }
+
+
+        .center-box {
+            background-color: white;
+            width: 700px;
+            margin: 50px auto;
+            padding: 20px;
+            border-radius: 0px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            text-align: center;
+        }
+
+        select {
+            width: 100%;
+            padding: 10px;
+            font-size: 16px;
+            margin-top: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        button {
+            margin-top: 20px;
+            padding: 10px 20px;
+            font-size: 16px;
+            color: white;
+            background-color: red;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: darkred;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="navbar">
+        <a href="/">Home</a>
+        <a href="/admin">Admin</a>
+        <a href="/reservations">Reservations</a>
+    </div>
+
+
+    <div class="center-box">
+        <h2>IT-4320 Trip Reservation System</h2>
+        <p>Welcome to the IT-4320 reservation system. Use the select box to choose whether to make a reservation or log in as administrator.</p>
+        <form action="#" method="GET" onsubmit="handleSelection(event)">
+            <select id="page-select" name="page">
+                <option value="" disabled selected>Choose an option</option>
+                <option value="/reservations">Reservations</option>
+                <option value="/admin">Admin</option>
+            </select>
+            <button type="submit">Go</button>
+        </form>
+    </div>
+
+    <script>
+
+        function handleSelection(event) {
+            event.preventDefault();
+            const selectedPage = document.getElementById('page-select').value;
+            if (selectedPage) {
+                window.location.href = selectedPage;
+            }
+        }
+    </script>
+</body>
+</html>
