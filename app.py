@@ -57,7 +57,7 @@ def admin():
             #if login fails, show an error message
             return render_template('admin.html', error="Invalid username or password")
     
-    # Render the login form if no POST request (before login)
+    #render the login form if no POST request (before login)
     return render_template('admin.html', seating_chart=None, total_sales=None, error=None)
 
 #cost matrix
