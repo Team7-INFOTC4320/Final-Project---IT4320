@@ -36,25 +36,25 @@ def home():
 @app.route('/admin', methods=['GET', 'POST'])
 def admin():
     if request.method == 'POST':
-        # Retrieve admin credentials from the form
+        #retrieve admin credentials from the form
         username = request.form['username']
         password = request.form['password']
         
-        # Check if the admin exists in the database
+        #check if the admin exists in the database
         admin = query_db('SELECT * FROM admins WHERE username = ? AND password = ?', [username, password], one=True)
         
         if admin:
-            # Fetch the reservations data from the database
+            #fetch the reservations data from the database
             reservations = query_db('SELECT seatRow, seatColumn FROM reservations')
 
-            # Generate the seating chart and calculate total sales
+            #generate the seating chart and calculate total sales
             seating_chart = generate_seating_chart(reservations)
             total_sales = calculate_total_sales()
 
-            # After successful login, render the admin page with the chart and sales info
+            #after successful login, render the admin page with the chart and sales info
             return render_template('admin.html', seating_chart=seating_chart, total_sales=total_sales)
         else:
-            # If login fails, show an error message
+            #if login fails, show an error message
             return render_template('admin.html', error="Invalid username or password")
     
     # Render the login form if no POST request (before login)
@@ -70,7 +70,7 @@ def calculate_total_sales():
     cost_matrix = get_cost_matrix()
     total_sales = 0
     
-    # Get all reservations from the database
+    #get all reservations from the database
     reservations = query_db('SELECT seatRow, seatColumn FROM reservations')
     
     for reservation in reservations:
@@ -82,16 +82,16 @@ def calculate_total_sales():
 
 #generate ASCII seating chart
 def generate_seating_chart(reservations_data):
-    # Create an empty 12x4 seating chart
-    seating_chart = [['o', 'o', 'o', 'o'] for _ in range(12)]  # 12 rows, 4 columns
+    #create an empty 12x4 seating chart
+    seating_chart = [['o', 'o', 'o', 'o'] for _ in range(12)]  #12 rows, 4 columns
 
-    # Iterate over the reservations data and mark reserved seats
+    #iterate over the reservations data and mark reserved seats
     for reservation in reservations_data:
         row = reservation['seatRow']
         column = reservation['seatColumn']
-        seating_chart[row][column] = 'x'  # Mark the seat as reserved (x)
+        seating_chart[row][column] = 'x'  #mark the seat as reserved (x)
 
-    # Convert the seating chart into an ASCII string representation
+    #convert the seating chart into an ASCII string representation
     chart_str = '\n'.join([' '.join(row) for row in seating_chart])
 
     return chart_str
@@ -104,13 +104,13 @@ def reservations():
         seat_row = int(request.form.get("seat_row")) - 1 #counting down choice to prevent index out of range error
         seat_column = int(request.form.get("seat_column")) - 1 #counting down choice to prevent index out of range error
         
-        # Validate first and last name (only allow letters and spaces)
+        #validate first and last name (only allow letters and spaces)
         name_regex = re.compile("^[A-Za-z ]+$")
         if not name_regex.match(first_name) or not name_regex.match(last_name):
             flash("Names can only contain letters and spaces. Please correct the input.", "error")
             return redirect(url_for("reservations"))
         
-        # Check if the seat is already reserved
+        #check if the seat is already reserved
         reserved_seat = query_db(
             "SELECT * FROM reservations WHERE seatRow = ? AND seatColumn = ?",
             [seat_row, seat_column],
@@ -120,7 +120,7 @@ def reservations():
             flash("This seat is already taken. Please select another.", "error")
             return redirect(url_for("reservations"))
         
-        # Generate eTicket and reserve the seat
+        #generate eTicket and reserve the seat
         eticket = f"{first_name[0]}{last_name[0]}{seat_row}{seat_column}TC4320"
         query_db(
             "INSERT INTO reservations (passengerName, seatRow, seatColumn, eTicketNumber) VALUES (?, ?, ?, ?)",
